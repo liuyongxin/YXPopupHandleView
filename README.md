@@ -6,7 +6,7 @@
 
 **演示**
 
-![image](./QQ20170502-140425-HD.gif)
+![image](https://github.com/liuyongxin/YXPopupHandleView/blob/master/YXPopupHandleViewDemo/QQ20170502-140425-HD.gif)
 
 **要求**
 
