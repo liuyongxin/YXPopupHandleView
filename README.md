@@ -6,7 +6,7 @@
 
 **演示**
 
-![YXPopupHandleView](./QQ20170502-140425-HD.gif)
+![Alt text](./QQ20170502-140425-HD.gif)
 
 **要求**
 
