@@ -6,7 +6,7 @@
 
 演示
 
-QQ20170502-140425-HD.gif
+![YXPopupHandleView](./QQ20170502-140425-HD.gif)
 
 要求
 
