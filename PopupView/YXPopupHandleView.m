@@ -1,10 +1,3 @@
-//
-//  YXPopupHandleView.m
-//  DzhProjectiPhone
-//
-//  Created by DZH_Louis on 2017/3/29.
-//  Copyright © 2017年 gw. All rights reserved.
-//
 
 #import "YXPopupHandleView.h"
 #import <malloc/malloc.h>
