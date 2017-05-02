@@ -98,12 +98,12 @@ typedef NS_ENUM(NSInteger,PopupHandleDisplayPosition)  //显示的位置
  显示视图
  @param view SuperView
  @param animated 是否需要弹出动画
- @param adismissAnimation 是否需要消失动画
+ @param dismissAnimation 是否需要消失动画
  */
 - (void)showInView:(UIView *)view animated:(BOOL)animated withDismissAnimation:(BOOL)dismissAnimation;
 /**
  消失方法
- @param animation是否需要消失动画
+ @param animation 是否需要消失动画
  */
 - (void)dismiss:(BOOL)animation;
 

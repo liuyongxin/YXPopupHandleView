@@ -1,5 +1,4 @@
 # YXPopupHandleView
-alert,actionSheet,notice,PopupHandleView
 
 **描述**
 
