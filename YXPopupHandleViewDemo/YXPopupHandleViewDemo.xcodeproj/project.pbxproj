@@ -14,6 +14,7 @@
 		48318C3B1EB3389900396A8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48318C3A1EB3389900396A8A /* Assets.xcassets */; };
 		48318C3E1EB3389900396A8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48318C3C1EB3389900396A8A /* LaunchScreen.storyboard */; };
 		48318C481EB338A000396A8A /* YXPopupHandleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48318C471EB338A000396A8A /* YXPopupHandleView.m */; };
+		4832717F1EB86E7500511C36 /* QQ20170502-140425-HD.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4832717E1EB86E7500511C36 /* QQ20170502-140425-HD.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		48318C3F1EB3389900396A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48318C461EB338A000396A8A /* YXPopupHandleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPopupHandleView.h; sourceTree = "<group>"; };
 		48318C471EB338A000396A8A /* YXPopupHandleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPopupHandleView.m; sourceTree = "<group>"; };
+		4832717E1EB86E7500511C36 /* QQ20170502-140425-HD.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "QQ20170502-140425-HD.gif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +47,7 @@
 		48318C221EB3389900396A8A = {
 			isa = PBXGroup;
 			children = (
+				4832717E1EB86E7500511C36 /* QQ20170502-140425-HD.gif */,
 				48318C451EB338A000396A8A /* PopupView */,
 				48318C2D1EB3389900396A8A /* YXPopupHandleViewDemo */,
 				48318C2C1EB3389900396A8A /* Products */,
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48318C3E1EB3389900396A8A /* LaunchScreen.storyboard in Resources */,
+				4832717F1EB86E7500511C36 /* QQ20170502-140425-HD.gif in Resources */,
 				48318C3B1EB3389900396A8A /* Assets.xcassets in Resources */,
 				48318C391EB3389900396A8A /* Main.storyboard in Resources */,
 			);
@@ -331,6 +335,7 @@
 				48318C441EB3389900396A8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
