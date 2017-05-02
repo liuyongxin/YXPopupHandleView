@@ -5,8 +5,7 @@ Pod::Spec.new do |s|
   s.version      = "1.0.0"
   s.summary      = "alert,actionSheet,notice effect of YXPopupHandleView"
   s.homepage     = "https://github.com/liuyongxin/YXPopupHandleView"
-  s.license = "MIT"
-  #s.license      = { :type => "MIT", :file => "LICENSE" }
+  s.license      = { :type => "MIT", :file => "LICENSE" }
 
   s.author             = { "Louis_liu" => "717811709@qq.com" }
   #s.platform     = :ios
