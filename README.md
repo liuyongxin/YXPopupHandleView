@@ -2,7 +2,8 @@
 
 **描述**
 
-一个控件实现 alert,actionSheet,notice 效果
+一个实现 alert,actionSheet,notice 效果的控件
+支持ARC和MRC模式(无需设置)
 
 **演示**
 
