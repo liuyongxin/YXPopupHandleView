@@ -10,7 +10,7 @@
 
 **要求**
 
-iOS 8.0 or later
+iOS 7.0 or later
 
 **集成**
 
