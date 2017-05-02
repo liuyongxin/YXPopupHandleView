@@ -9,11 +9,11 @@ Pod::Spec.new do |s|
   #s.license      = { :type => "MIT", :file => "LICENSE" }
 
   s.author             = { "DZH_Louis" => "717811709@qq.com" }
-  s.platform     = :ios
+  #s.platform     = :ios
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/liuyongxin/YXPopupHandleView.git", :tag => '1.0.0' }
+  s.source       = { :git => "https://github.com/liuyongxin/YXPopupHandleView.git", :tag => "1.0.0" }
 
-  s.source_files  = "YXPopupHandleView/*.{h,m}"
+  s.source_files  = "PopupView/*.{h,m}"
 
   # s.public_header_files = "Classes/**/*.h"
 
