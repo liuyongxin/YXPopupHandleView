@@ -13,6 +13,8 @@ static CGFloat kContentFontSize = 15; //默认字体大小
 static CGFloat kContentTextVerticalSpace = 5; //默认内容每行间隔
 static CGFloat kContentFootViewHeight = 5; //默认内容footView高度
 static CGFloat kCornerRadius = 12; //alert圆角弧度
+static CGFloat kIconWidth = 15; //图标宽度
+
 @interface YXPopupHandleView ()<CAAnimationDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property(nonatomic,retain)NSAttributedString *titleAttrStr;
@@ -20,6 +22,7 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
 @property(nonatomic,retain)NSMutableArray <NSAttributedString*>*btnItems;
 @property(nonatomic,copy)void(^clickBtnAction)(NSInteger btnIndex);
 @property(nonatomic,retain)NSMutableArray *contentItemsHeightArr;
+@property(nonatomic,retain)NSArray *iconItems;
 
 @property(nonatomic,retain)UIImageView *mainBgView;
 @property(nonatomic,retain)UIView *alertView;
@@ -42,10 +45,19 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
     self.contentItems = nil;
     self.btnItems = nil;
     self.clickBtnAction = nil;
+    self.iconItems = nil;
     _selfSuperView = nil;
+    self.closeBtnAttrStr = nil;
 #ifdef MRC_PopupConfirmView
     [super dealloc];
 #endif
+}
+
+- (instancetype)initWithTitle:(NSAttributedString *)titleAttrStr iconItems:(NSArray <UIImage*>*)iconItems contentItems:(NSArray <NSArray <NSAttributedString*>*>*)contentItems buttonItems:(NSArray <NSAttributedString*>*)btnItems clickBtnAction:(void(^)(NSInteger btnIndex))action
+{
+    YXPopupHandleView *popupHandleView =  [self initWithTitle:titleAttrStr contentItems:contentItems buttonItems:btnItems clickBtnAction:action delegate:nil];
+    popupHandleView.iconItems = iconItems;
+    return popupHandleView;
 }
 
 - (instancetype)initWithTitle:(NSAttributedString *)titleAttrStr contentItems:(NSArray <NSArray <NSAttributedString*>*>*)contentItems buttonItems:(NSArray <NSAttributedString*>*)btnItems clickBtnAction:(void(^)(NSInteger btnIndex))action
@@ -97,6 +109,7 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
     _isSeparateBtn = NO;
     _displayPosition = PopupHandleDisplayPositionDefault;
     _displayAnimationStyle = PopupHandleDisplayAnimationStyleDefault;
+    _iconWidth = kIconWidth;
 }
 
 - (void)configUI
@@ -261,16 +274,22 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
     
     CGFloat sumHeight = 0.0;
     CGFloat lrSpace = _contentLRSpace;
+    CGFloat iconWidth = 0.0;
+    CGFloat iconSpace = 0.0;
+    if (self.iconItems && self.iconItems.count > 0) {
+        iconWidth = _iconWidth;
+        iconSpace = 5;
+    }
     for (NSArray *subArr in self.contentItems) {
         CGFloat mHeight = 0.0;
-        CGFloat cellWidth = (maxWidth - lrSpace*2);
+        CGFloat cellWidth = (maxWidth - lrSpace*2 - iconSpace - iconWidth);
         if (subArr.count == 2)
         {
-            cellWidth = (maxWidth - _midSpace - lrSpace*2)/2;
+            cellWidth = (maxWidth - _midSpace - lrSpace*2  - iconSpace - iconWidth)/2;
         }
         else if (subArr.count == 3)
         {
-            cellWidth = (maxWidth - _midSpace*2 - lrSpace*2)/3;
+            cellWidth = (maxWidth - _midSpace*2 - lrSpace*2 - iconSpace - iconWidth)/3;
         }
         BOOL useSingle = _useSingleRow && (subArr.count == 2 || subArr.count == 3);  //两条并排才使用,缩放
         for (NSAttributedString *aStr in subArr) {
@@ -490,11 +509,12 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
             cell.contentLRSpace = _contentLRSpace;
             cell.midSpace = _midSpace;
             cell.contentTextAlignment = self.contentTextAlignment;
+            cell.iconWidth = _iconWidth;
         }
         if (self.contentItemsHeightArr.count > indexPath.row) {
             cell.cellHeight = [self.contentItemsHeightArr[indexPath.row] floatValue];
         }
-        [cell fillItemsData:self.contentItems[indexPath.row]];
+        [cell fillItemsData:self.contentItems[indexPath.row] iconImage:(self.iconItems.count > indexPath.row) ? self.iconItems[indexPath.row] : nil];
         return cell;
     }
     else
@@ -516,6 +536,9 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
         NSAttributedString *btnTextAttr = self.btnItems[indexPath.row];
         if (![btnTextAttr isKindOfClass:[NSAttributedString class]]) {
             btnTextAttr = [[NSAttributedString alloc]initWithString:@""];
+#ifdef MRC_PopupConfirmView
+            [btnTextAttr autorelease];
+#endif
         }
         cell.textLabel.attributedText = btnTextAttr;
         return cell;
@@ -669,6 +692,7 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
 #pragma mark -- PopupHandleItemCell;
 @interface PopupHandleItemCell()
 
+@property(nonatomic,retain)UIImageView *iconImageView;
 @property(nonatomic,retain)UILabel *itemLabelOne;
 @property(nonatomic,retain)UILabel *itemLabelTwo;
 @property(nonatomic,retain)UILabel *itemLabelThree;
@@ -696,6 +720,12 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
 
 - (void)createSubviews
 {
+    _iconImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    _iconImageView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_iconImageView];
+#ifdef MRC_PopupConfirmView
+    [_iconImageView release];
+#endif
     _itemLabelOne = [[UILabel alloc]initWithFrame:CGRectZero];
     _itemLabelOne.textColor = [UIColor grayColor];
     _itemLabelOne.adjustsFontSizeToFitWidth = YES;
@@ -744,7 +774,7 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
     _itemLabelThree.font = itemFont ? itemFont : [UIFont systemFontOfSize: kContentFontSize];
 }
 
-- (void)fillItemsData:(NSArray *)itemsArr
+- (void)fillItemsData:(NSArray *)itemsArr iconImage:(UIImage *)iconIamge
 {
     _itemLabelOne.attributedText = nil;
     _itemLabelTwo.attributedText = nil;
@@ -753,9 +783,21 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
     _itemLabelTwo.frame = CGRectZero;
     _itemLabelThree.frame = CGRectZero;
     if (!itemsArr || itemsArr.count <= 0) {return;}
-    NSInteger count = itemsArr.count;
+    NSUInteger count = itemsArr.count;
     CGFloat lrSpace = _contentLRSpace;
-    CGFloat width =(_cellWidth - _midSpace*(count -1) - lrSpace*2)/count;
+    CGFloat iconWidth = 0.0;
+    CGFloat iconSpace = 0.0;
+    if (iconIamge && [iconIamge isKindOfClass:[UIImage class]]) {
+        iconWidth = _iconWidth;
+        iconSpace = 5;
+        _iconImageView.frame = CGRectMake(lrSpace, 2, iconWidth, iconWidth);
+        _iconImageView.image = iconIamge;
+    }
+    else{
+        _iconImageView.frame = CGRectZero;
+        _iconImageView.image = nil;
+    }
+    CGFloat width = (_cellWidth - _midSpace*(count -1) - lrSpace*2 - iconWidth - iconSpace)/count;
     for (int i = 0; i < itemsArr.count; i++) {
         NSAttributedString *attrStr = itemsArr[i];
         if (attrStr && [attrStr isKindOfClass:[NSAttributedString class]] && attrStr.length > 0)
@@ -779,21 +821,21 @@ static CGFloat kCornerRadius = 12; //alert圆角弧度
                 if (attrStr && [attrStr isKindOfClass:[NSAttributedString class]] && attrStr.length > 0){
                     _itemLabelOne.attributedText = attrStr;
                 }
-                _itemLabelOne.frame = CGRectMake(lrSpace, 0, width, size.height);
+                _itemLabelOne.frame = CGRectMake(iconWidth + iconSpace + lrSpace, 0, width, size.height);
             }
             else if (i == 1)
             {
                 if (attrStr && [attrStr isKindOfClass:[NSAttributedString class]] && attrStr.length > 0){
                     _itemLabelTwo.attributedText = attrStr;
                 }
-                _itemLabelTwo.frame = CGRectMake(width+_midSpace+lrSpace, 0, width, size.height);
+                _itemLabelTwo.frame = CGRectMake(width + _midSpace + iconWidth + iconSpace + lrSpace, 0, width, size.height);
             }
             else if (i == 2)
             {
                 if (attrStr && [attrStr isKindOfClass:[NSAttributedString class]] && attrStr.length > 0){
                     _itemLabelThree.attributedText = attrStr;
                 }
-                _itemLabelThree.frame = CGRectMake(width*2+_midSpace*2+lrSpace, 0, width, size.height);
+                _itemLabelThree.frame = CGRectMake(width*2 + _midSpace*2 + iconWidth + iconSpace + lrSpace, 0, width, size.height);
             }
         }
     }

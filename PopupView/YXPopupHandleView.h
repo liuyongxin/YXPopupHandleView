@@ -36,6 +36,7 @@ typedef NS_ENUM(NSInteger,PopupHandleDisplayPosition)  //显示的位置
 @property(nonatomic,assign)CGFloat midSpace; //中间边距,默认10
 @property(nonatomic,assign)CGFloat contentTextVerticalSpace; //内容每行间隔,默认5
 @property(nonatomic,assign)CGFloat contentFootViewHeight;
+@property(nonatomic,assign)CGFloat iconWidth;  //列图标宽度,默认15
 
 @property(nonatomic,assign)id<YXPopupHandleViewDelegate>delegate;
 @property(nonatomic,assign)BOOL isNeedShowCloseBtn; //默认NO
@@ -51,6 +52,17 @@ typedef NS_ENUM(NSInteger,PopupHandleDisplayPosition)  //显示的位置
 
 @property(nonatomic,assign,readonly)BOOL isShow;    //是否是显示状态
 @property(nonatomic,assign,readonly)UIView *selfSuperView;
+
+/**
+ 初始化
+ @param titleAttrStr 标题
+ @param iconItems 图标
+ @param contentItems @[@[item1,item2],@[item3],@[item4,item5]....]  //数组内最多三个元素(目前支持)
+ @param btnItems @[str1,str2,str3...]
+ @param action 点击按钮事件
+ @return 返回对象
+ */
+- (instancetype)initWithTitle:(NSAttributedString *)titleAttrStr iconItems:(NSArray <UIImage*>*)iconItems contentItems:(NSArray <NSArray <NSAttributedString*>*>*)contentItems buttonItems:(NSArray <NSAttributedString*>*)btnItems clickBtnAction:(void(^)(NSInteger btnIndex))action;
 
 - (instancetype)initWithTitle:(NSAttributedString*)titleAttrStr contentItems:(NSArray <NSArray <NSAttributedString*>*>*)contentItems buttonItems:(NSArray <NSAttributedString*>*)btnItems clickBtnAction:(void(^)(NSInteger btnIndex))action;
 
@@ -116,7 +128,8 @@ typedef NS_ENUM(NSInteger,PopupHandleDisplayPosition)  //显示的位置
 @property(nonatomic,assign)CGFloat contentLRSpace; //内容左右边距,默认10
 @property(nonatomic,assign)CGFloat midSpace; //中间边距,默认10
 @property(nonatomic,assign)NSTextAlignment contentTextAlignment;
+@property(nonatomic,assign)CGFloat iconWidth;  //列图标宽度,默认15
 
-- (void)fillItemsData:(NSArray *)itemsArr;
+- (void)fillItemsData:(NSArray *)itemsArr iconImage:(UIImage *)iconIamge;
 
 @end
