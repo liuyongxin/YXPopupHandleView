@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "YXPopupHandleView"
-  s.version      = "1.0.1"
+  s.version      = “1.0.2”
   s.summary      = "alert,actionSheet,notice effect of YXPopupHandleView"
   s.homepage     = "https://github.com/liuyongxin/YXPopupHandleView"
   s.license      = { :type => "MIT", :file => "LICENSE" }

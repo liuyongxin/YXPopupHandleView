@@ -760,7 +760,7 @@ static CGFloat kIconWidth = 15; //图标宽度
 
 - (void)setContentTextAlignment:(NSTextAlignment)contentTextAlignment
 {
-    objc_setAssociatedObject(self, @selector(contentTextAlignment), @(contentTextAlignment), OBJC_ASSOCIATION_ASSIGN);
+    _contentTextAlignment = contentTextAlignment;
     _itemLabelOne.textAlignment = _contentTextAlignment;
     _itemLabelTwo.textAlignment = _contentTextAlignment;
     _itemLabelThree.textAlignment = _contentTextAlignment;
@@ -768,7 +768,12 @@ static CGFloat kIconWidth = 15; //图标宽度
 
 - (void)setItemFont:(UIFont *)itemFont
 {
-    objc_setAssociatedObject(self, @selector(itemFont), itemFont, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+#ifdef MRC_PopupConfirmView
+    [_itemFont release];
+    _itemFont = [itemFont retain];
+#else
+    _itemFont = itemFont;
+#endif
     _itemLabelOne.font = itemFont ? itemFont : [UIFont systemFontOfSize: kContentFontSize];
     _itemLabelTwo.font = itemFont ? itemFont : [UIFont systemFontOfSize: kContentFontSize];
     _itemLabelThree.font = itemFont ? itemFont : [UIFont systemFontOfSize: kContentFontSize];
